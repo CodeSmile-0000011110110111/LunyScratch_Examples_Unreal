@@ -5,3 +5,4 @@
 [submodule "Script/ManagedLunyScratch_Examples/LunyScratch_Unreal"]
 	path = Script/ManagedLunyScratch_Examples/LunyScratch_Unreal
 	url = https://github.com/CodeSmile-0000011110110111/LunyScratch_Unreal.git
+	branch = main
