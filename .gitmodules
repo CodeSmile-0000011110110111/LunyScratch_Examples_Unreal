@@ -1,0 +1,4 @@
+[submodule "Plugins/UnrealSharp"]
+	path = Plugins/UnrealSharp
+	url = https://github.com/UnrealSharp/UnrealSharp.git
+	branch = main
