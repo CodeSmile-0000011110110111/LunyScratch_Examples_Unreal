@@ -17,5 +17,9 @@
     </Reference>
     <Analyzer Include="..\..\Plugins\UnrealSharp\Binaries\Managed\UnrealSharp.SourceGenerators.dll" />
     <ProjectReference Include="..\LunyScratch_Examples.Glue\LunyScratch_Examples.Glue.csproj" />
+    <None Update="**/*.meta" Visible="false" />
+    <None Update="**/*.asmdef" Visible="false" />
+    <None Update="**/.gitignore" Visible="false" />
+    <None Update="**/.gitmodules" Visible="false" />
   </ItemGroup>
 </Project>
