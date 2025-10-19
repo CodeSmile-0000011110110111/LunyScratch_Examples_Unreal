@@ -2,9 +2,7 @@
 using UnrealSharp.Attributes;
 using UnrealSharp.CoreUObject;
 using UnrealSharp.Engine;
-
 using static LunyScratch.Blocks;
-using static LunyScratch.UnrealBlocks;
 
 namespace ManagedScratchTest10
 {
@@ -50,27 +48,11 @@ namespace ManagedScratchTest10
 			_heading = ActorForwardVector;
 
 
-			Scratch.Run(
-				Wait(_accelerateDelay),
-				RepeatForever(MoveCar)
-			);
-
-			_car.GetChildrenComponents(true, out var lights);
-			Scratch.RepeatForever(
-				Enable(lights[0]),
-				Disable(lights[1]),
-				Wait(0.12),
-				Disable(lights[0]),
-				Enable(lights[1]),
-				Wait(0.1)
-			);
 		}
-
 
 		private void MoveCar()
 		{
 			//PrintString($"MoveCar: {_car}");
-
 
 			// if (transform.position.x < _stopX)
 			// {
