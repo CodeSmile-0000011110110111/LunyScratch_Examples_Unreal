@@ -1,6 +1,6 @@
 [submodule "Plugins/UnrealSharp"]
 	path = Plugins/UnrealSharp
-	url = https://github.com/UnrealSharp/UnrealSharp.git
+	url = https://github.com/CodeSmile-0000011110110111/UnrealSharp.git
 	branch = main
 [submodule "Script/ManagedLunyScratch_Examples/LunyScratch_Unreal"]
 	path = Script/ManagedLunyScratch_Examples/LunyScratch_Unreal
