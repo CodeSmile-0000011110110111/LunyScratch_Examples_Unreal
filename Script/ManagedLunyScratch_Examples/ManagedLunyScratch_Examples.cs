@@ -6,7 +6,6 @@ namespace ManagedLunyScratch_Examples
     {
         public void StartupModule()
         {
-
         }
 
         public void ShutdownModule()
