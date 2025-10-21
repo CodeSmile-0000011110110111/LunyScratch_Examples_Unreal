@@ -5,13 +5,12 @@ using static LunyScratch.Blocks;
 
 namespace ManagedScratchTest10
 {
-	public class ATest : APlayerController
+	public class ATestPawn : ACharacter
 	{
 
 	}
-
 	[UClass]
-	public class APoliceCarScratch : AScratchActor
+	public class APoliceCarScratch : AScratchCharacter
 	{
 		private Single _turnSpeed = 70f;
 		private Single _moveSpeed = 16f;
