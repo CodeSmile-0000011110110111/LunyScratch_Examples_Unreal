@@ -1,5 +1,6 @@
 ﻿using LunyScratch;
 using UnrealSharp.Attributes;
+using UnrealSharp.Engine;
 using static LunyScratch.Blocks;
 
 namespace ManagedLunyScratch_Examples

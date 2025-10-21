@@ -1,16 +1,14 @@
 ﻿using LunyScratch;
 using UnrealSharp.Attributes;
+using UnrealSharp.CoreUObject;
 using UnrealSharp.Engine;
+using UnrealSharp.InputCore;
 using static LunyScratch.Blocks;
 
 namespace ManagedScratchTest10
 {
-	public class ATestPawn : ACharacter
-	{
-
-	}
 	[UClass]
-	public class APoliceCarScratch : AScratchCharacter
+	public class APoliceCarScratch : AScratchPawn
 	{
 		private Single _turnSpeed = 70f;
 		private Single _moveSpeed = 16f;
@@ -94,6 +92,39 @@ namespace ManagedScratchTest10
 			RepeatForever(DecrementVariable(GlobalVariables["MiniCubeSoundTimeout"]));
 			// increment progress every so often
 			RepeatForever(IncrementVariable(progressVar), Wait(15), PlaySound());
+		}
+
+		public override void Tick(Single deltaTime)
+		{
+			base.Tick(deltaTime);
+
+			var keyW = new FKey { KeyName = "W" };
+			var keyA = new FKey { KeyName = "A" };
+			var keyS = new FKey { KeyName = "S" };
+			var keyD = new FKey { KeyName = "D" };
+
+			var  inputMove = FVector.Zero;
+			var  inputTurn = FVector.Zero;
+
+			var root = RootComponent as UPrimitiveComponent;
+			var playerController = UGameplayStatics.GetPlayerController(0);
+			if (playerController.IsInputKeyDown(keyW))
+				inputMove += root.ForwardVector;
+			if (playerController.IsInputKeyDown(keyS))
+				 inputMove -= root.ForwardVector;
+			if (playerController.IsInputKeyDown(keyA))
+				inputTurn -= FVector.Up;
+			if (playerController.IsInputKeyDown(keyD))
+				inputTurn += FVector.Up;
+
+			// var move = GetComponentByClass<UCharacterMovementComponent>();
+			// move.AddForce(inputVector * _moveSpeed * 1000);
+
+			//var prim = root.GetChildComponent(0) as UPrimitiveComponent;
+			root.AddForce( inputMove * _moveSpeed * 1000000);
+			root.AddTorqueInDegrees( inputTurn * _turnSpeed * 100000000);
+			//root.AddRelativeLocation(inputVector * _moveSpeed, false, out var _, false);
+
 		}
 	}
 }
