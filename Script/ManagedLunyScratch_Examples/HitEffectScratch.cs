@@ -1,23 +1,24 @@
 ﻿using LunyScratch;
 using UnrealSharp.Attributes;
-using UnrealSharp.Engine;
 using static LunyScratch.Blocks;
 
 namespace ManagedLunyScratch_Examples
 {
 	[UClass]
-	public class AHitEffectScratch : AScratchActor
+	public class AHitEffectScratch : AScratchStaticMeshActor
 	{
-		private Double _timeToLiveInSeconds = 3;
-		private Double _minVelocityForSound = 3;
+		[UProperty(PropertyFlags.BlueprintReadWrite)]
+		public Double TimeToLiveInSeconds { get; set; } = 3;
+		[UProperty(PropertyFlags.BlueprintReadWrite)]
+		public Double MinVelocityForSound { get; set; } = 3;
 
 		protected override void OnScratchReady()
 		{
-			Run(Wait(_timeToLiveInSeconds), DestroySelf());
+			Run(Wait(TimeToLiveInSeconds), DestroySelf());
 
 			var globalTimeout = GlobalVariables["MiniCubeSoundTimeout"];
 			When(CollisionEnter(),
-				If(AND(IsVariableLessThan(globalTimeout, 0), IsCurrentSpeedGreater(_minVelocityForSound)),
+				If(AND(IsVariableLessThan(globalTimeout, 0), IsCurrentSpeedGreater(MinVelocityForSound)),
 					PlaySound(), SetVariable(globalTimeout, 0)));
 		}
 	}

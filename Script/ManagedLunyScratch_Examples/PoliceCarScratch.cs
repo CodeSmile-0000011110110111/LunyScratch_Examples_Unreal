@@ -51,14 +51,13 @@ namespace ManagedScratchTest10
 					),
 
 				// Steering
-				If(IsCurrentSpeedGreater(1000),
+				If(IsCurrentSpeedGreater(500),
 					If(IsKeyPressed(Key.A), TurnLeft(TurnSpeed)),
 					If(IsKeyPressed(Key.D), TurnRight(TurnSpeed)))
 			);
 
 			// add score and time on ball collision
 			When(CollisionEnter(tag: "CompanionCube"),
-				Say("Police hit companionCube"),
 				IncrementVariable("Time"),
 				// add 'power of three' times the progress to score
 				SetVariable(Variables["temp"], progressVar),

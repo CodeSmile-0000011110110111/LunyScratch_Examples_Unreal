@@ -5,9 +5,10 @@ using static LunyScratch.Blocks;
 namespace ManagedLunyScratch_Examples
 {
 	[UClass]
-	public class ACompanionCubeScratch : AScratchActor
+	public class ACompanionCubeScratch : AScratchStaticMeshActor
 	{
-		private Single _minVelocityForSound = 5f;
+		[UProperty(PropertyFlags.BlueprintReadWrite)]
+		public Single MinVelocityForSound { get; set; } = 5f;
 
 		protected override void OnScratchReady()
 		{
@@ -20,25 +21,23 @@ namespace ManagedLunyScratch_Examples
 			Run(Disable("Lights"));
 
 			When(CollisionEnter(tag: "Police"),
-				Say("CompanionCube got hit by police!"),
 				// play bump sound unconditionally and make cube glow
-				PlaySound(), Enable("Lights"),
-				CreateInstance("Prefabs/HitEffect"),
+				PlaySound(),
+				Enable("Lights"),
 				// count down from current progress value to spawn more cube instances the longer the game progresses
 				RepeatWhileTrue(() =>
-					{
-						if (counterVar.Number > progressVar.Number)
-							counterVar.Set(Math.Clamp(progressVar.Number, 1, 50));
-						counterVar.Subtract(1);
-						return counterVar.Number >= 0;
-					}, CreateInstance("Prefabs/HitEffect"), Wait(1 / 60f),
-					CreateInstance("Prefabs/HitEffect"), Wait(1 / 60f),
-					CreateInstance("Prefabs/HitEffect")),
-				Wait(1), Disable("Lights"));
+				{
+					if (counterVar.Number > progressVar.Number)
+						counterVar.Set(Math.Clamp(progressVar.Number, 1, 50));
+					counterVar.Subtract(1);
+					return counterVar.Number >= 0;
+				}, CreateInstance("Prefabs/HitEffect")),
+				Wait(1),
+				Disable("Lights"));
 
 			// play sound when ball bumps into anything
 			When(CollisionEnter(),
-				If(IsCurrentSpeedGreater(_minVelocityForSound),
+				If(IsCurrentSpeedGreater(MinVelocityForSound),
 					PlaySound()));
 		}
 	}
