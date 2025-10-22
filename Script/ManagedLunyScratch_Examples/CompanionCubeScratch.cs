@@ -8,7 +8,7 @@ namespace ManagedLunyScratch_Examples
 	public class ACompanionCubeScratch : AScratchStaticMeshActor
 	{
 		[UProperty(PropertyFlags.BlueprintReadWrite)]
-		public Single MinVelocityForSound { get; set; } = 5f;
+		public Single MinVelocityForSound { get; set; }
 
 		protected override void OnScratchReady()
 		{
@@ -31,7 +31,7 @@ namespace ManagedLunyScratch_Examples
 						counterVar.Set(Math.Clamp(progressVar.Number, 1, 50));
 					counterVar.Subtract(1);
 					return counterVar.Number >= 0;
-				}, CreateInstance("Prefabs/HitEffect")),
+				}, CreateInstance("Prefabs/HitEffect"),CreateInstance("Prefabs/HitEffect"),CreateInstance("Prefabs/HitEffect")),
 				Wait(1),
 				Disable("Lights"));
 

@@ -8,13 +8,13 @@ namespace ManagedScratchTest10
 	public class APoliceCarScratch : AScratchPawn
 	{
 		[UProperty(PropertyFlags.BlueprintReadWrite)]
-		public Single TurnSpeed { get; set; } = 70f;
+		public Single TurnSpeed { get; set; }
 		[UProperty(PropertyFlags.BlueprintReadWrite)]
-		public Single MoveSpeed { get; set; } = 16f;
+		public Single MoveSpeed { get; set; }
 		[UProperty(PropertyFlags.BlueprintReadWrite)]
-		public Single Deceleration { get; set; } = 0.85f;
+		public Single Deceleration { get; set; }
 		[UProperty(PropertyFlags.BlueprintReadWrite)]
-		public Int32 StartTimeInSeconds { get; set; } = 5;
+		public Int32 StartTimeInSeconds { get; set; }
 
 		protected override void OnScratchReady()
 		{

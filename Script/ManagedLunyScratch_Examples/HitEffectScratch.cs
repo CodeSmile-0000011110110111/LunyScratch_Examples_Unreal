@@ -8,9 +8,9 @@ namespace ManagedLunyScratch_Examples
 	public class AHitEffectScratch : AScratchStaticMeshActor
 	{
 		[UProperty(PropertyFlags.BlueprintReadWrite)]
-		public Double TimeToLiveInSeconds { get; set; } = 3;
+		public Double TimeToLiveInSeconds { get; set; }
 		[UProperty(PropertyFlags.BlueprintReadWrite)]
-		public Double MinVelocityForSound { get; set; } = 3;
+		public Double MinVelocityForSound { get; set; }
 
 		protected override void OnScratchReady()
 		{
