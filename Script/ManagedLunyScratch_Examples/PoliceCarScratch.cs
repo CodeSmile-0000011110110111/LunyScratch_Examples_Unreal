@@ -1,8 +1,5 @@
 ﻿using LunyScratch;
 using UnrealSharp.Attributes;
-using UnrealSharp.CoreUObject;
-using UnrealSharp.Engine;
-using UnrealSharp.InputCore;
 using static LunyScratch.Blocks;
 
 namespace ManagedScratchTest10
@@ -10,33 +7,20 @@ namespace ManagedScratchTest10
 	[UClass]
 	public class APoliceCarScratch : AScratchPawn
 	{
-		private Single _turnSpeed = 70f;
-		private Single _moveSpeed = 16f;
-		private Single _deceleration = 0.85f;
-		private Int32 _startTimeInSeconds = 5;
-
 		[UProperty(PropertyFlags.BlueprintReadWrite)]
-		public Single TurnSpeed
-		{
-			get => _turnSpeed;
-			set
-			{
-				_turnSpeed = value;
-				PrintString("Turn Speed set: " + value);
-			}
-		}
+		public Single TurnSpeed { get; set; } = 70f;
 		[UProperty(PropertyFlags.BlueprintReadWrite)]
-		public Single MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
+		public Single MoveSpeed { get; set; } = 16f;
 		[UProperty(PropertyFlags.BlueprintReadWrite)]
-		public Single Deceleration { get => _deceleration; set => _deceleration = value; }
+		public Single Deceleration { get; set; } = 0.85f;
 		[UProperty(PropertyFlags.BlueprintReadWrite)]
-		public Int32 StartTimeInSeconds { get => _startTimeInSeconds; set => _startTimeInSeconds = value; }
+		public Int32 StartTimeInSeconds { get; set; } = 5;
 
 		protected override void OnScratchReady()
 		{
 			var progressVar = GlobalVariables["Progress"];
 			var scoreVariable = Variables.Set("Score", 0);
-			var timeVariable = Variables.Set("Time", _startTimeInSeconds);
+			var timeVariable = Variables.Set("Time", StartTimeInSeconds);
 
 			// Handle UI State
 			// HUD.BindVariable(scoreVariable);
@@ -60,16 +44,16 @@ namespace ManagedScratchTest10
 			RepeatForeverPhysics(
 				// Forward/Backward movement
 				If(IsKeyPressed(Key.W),
-						MoveForward(_moveSpeed), disableBrakeLights)
+						MoveForward(MoveSpeed), disableBrakeLights)
 					.Else(If(IsKeyPressed(Key.S),
-							MoveBackward(_moveSpeed), enableBrakeLights)
-						.Else(SlowDownMoving(_deceleration), disableBrakeLights)
+							MoveBackward(MoveSpeed), enableBrakeLights)
+						.Else(SlowDownMoving(Deceleration), disableBrakeLights)
 					),
 
 				// Steering
 				If(IsCurrentSpeedGreater(0.1),
-					If(IsKeyPressed(Key.A), TurnLeft(_turnSpeed)),
-					If(IsKeyPressed(Key.D), TurnRight(_turnSpeed)))
+					If(IsKeyPressed(Key.A), TurnLeft(TurnSpeed)),
+					If(IsKeyPressed(Key.D), TurnRight(TurnSpeed)))
 			);
 
 			// add score and time on ball collision
