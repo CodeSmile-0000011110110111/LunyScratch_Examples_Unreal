@@ -20,8 +20,10 @@ namespace ManagedLunyScratch_Examples
 			Run(Disable("Lights"));
 
 			When(CollisionEnter(tag: "Police"),
+				Say("CompanionCube got hit by police!"),
 				// play bump sound unconditionally and make cube glow
 				PlaySound(), Enable("Lights"),
+				CreateInstance("Prefabs/HitEffect"),
 				// count down from current progress value to spawn more cube instances the longer the game progresses
 				RepeatWhileTrue(() =>
 					{
