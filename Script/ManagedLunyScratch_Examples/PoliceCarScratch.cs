@@ -16,7 +16,15 @@ namespace ManagedScratchTest10
 		private Int32 _startTimeInSeconds = 5;
 
 		[UProperty(PropertyFlags.BlueprintReadWrite)]
-		public Single TurnSpeed { get => _turnSpeed; set => _turnSpeed = value; }
+		public Single TurnSpeed
+		{
+			get => _turnSpeed;
+			set
+			{
+				_turnSpeed = value;
+				PrintString("Turn Speed set: " + value);
+			}
+		}
 		[UProperty(PropertyFlags.BlueprintReadWrite)]
 		public Single MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
 		[UProperty(PropertyFlags.BlueprintReadWrite)]
@@ -49,20 +57,20 @@ namespace ManagedScratchTest10
 			// Use RepeatForeverPhysics for physics-based movement
 			var enableBrakeLights = Sequence(Enable("BrakeLight1"), Enable("BrakeLight2"));
 			var disableBrakeLights = Sequence(Disable("BrakeLight1"), Disable("BrakeLight2"));
-			// RepeatForeverPhysics(
-			// 	// Forward/Backward movement
-			// 	If(IsKeyPressed(Key.W),
-			// 			MoveForward(_moveSpeed), disableBrakeLights)
-			// 		.Else(If(IsKeyPressed(Key.S),
-			// 				MoveBackward(_moveSpeed), enableBrakeLights)
-			// 			.Else(SlowDownMoving(_deceleration), disableBrakeLights)
-			// 		),
-			//
-			// 	// Steering
-			// 	If(IsCurrentSpeedGreater(0.1),
-			// 		If(IsKeyPressed(Key.A), TurnLeft(_turnSpeed)),
-			// 		If(IsKeyPressed(Key.D), TurnRight(_turnSpeed)))
-			// );
+			RepeatForeverPhysics(
+				// Forward/Backward movement
+				If(IsKeyPressed(Key.W),
+						MoveForward(_moveSpeed), disableBrakeLights)
+					.Else(If(IsKeyPressed(Key.S),
+							MoveBackward(_moveSpeed), enableBrakeLights)
+						.Else(SlowDownMoving(_deceleration), disableBrakeLights)
+					),
+
+				// Steering
+				If(IsCurrentSpeedGreater(0.1),
+					If(IsKeyPressed(Key.A), TurnLeft(_turnSpeed)),
+					If(IsKeyPressed(Key.D), TurnRight(_turnSpeed)))
+			);
 
 			// add score and time on ball collision
 			When(CollisionEnter(tag: "CompanionCube"),
@@ -94,7 +102,7 @@ namespace ManagedScratchTest10
 			RepeatForever(IncrementVariable(progressVar), Wait(15), PlaySound());
 		}
 
-		public override void Tick(Single deltaTime)
+		/*public override void Tick(Single deltaTime)
 		{
 			base.Tick(deltaTime);
 
@@ -117,14 +125,8 @@ namespace ManagedScratchTest10
 			if (playerController.IsInputKeyDown(keyD))
 				inputTurn += FVector.Up;
 
-			// var move = GetComponentByClass<UCharacterMovementComponent>();
-			// move.AddForce(inputVector * _moveSpeed * 1000);
-
-			//var prim = root.GetChildComponent(0) as UPrimitiveComponent;
 			root.AddForce( inputMove * _moveSpeed * 1000000);
 			root.AddTorqueInDegrees( inputTurn * _turnSpeed * 100000000);
-			//root.AddRelativeLocation(inputVector * _moveSpeed, false, out var _, false);
-
-		}
+		}*/
 	}
 }
