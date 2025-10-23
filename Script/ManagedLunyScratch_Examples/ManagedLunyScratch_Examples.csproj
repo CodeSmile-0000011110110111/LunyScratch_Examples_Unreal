@@ -23,7 +23,4 @@
     <None Update="**/.gitignore" Visible="false" />
     <None Update="**/.gitmodules" Visible="false" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="LunyScratch_Unreal\Runtime\Unreal\UI\" />
-  </ItemGroup>
 </Project>

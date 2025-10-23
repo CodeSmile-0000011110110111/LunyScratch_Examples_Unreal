@@ -1,5 +1,6 @@
 ﻿using LunyScratch;
 using UnrealSharp.Attributes;
+using UnrealSharp.CoreUObject;
 using static LunyScratch.Blocks;
 
 namespace ManagedScratchTest10
@@ -18,25 +19,27 @@ namespace ManagedScratchTest10
 
 		protected override void OnScratchReady()
 		{
+			PrintString("PoliceCarScratch.OnScratchReady()", color: FLinearColor.Red);
+
 			var progressVar = GlobalVariables["Progress"];
 			var scoreVariable = Variables.Set("Score", 0);
 			var timeVariable = Variables.Set("Time", StartTimeInSeconds);
 
 			// Handle UI State
-			// HUD.BindVariable(scoreVariable);
-			// HUD.BindVariable(timeVariable);
+			HUD.BindVariable(scoreVariable);
+			HUD.BindVariable(timeVariable);
 
-			//Run(HideMenu(), ShowHUD());
-			//RepeatForever(If(IsKeyJustPressed(Key.Escape), ShowMenu()));
+			Run(HideMenu(), ShowHUD());
+			RepeatForever(If(IsKeyJustPressed(Key.Escape), ShowMenu()));
 
 			// must run globally because we Disable() the car and thus all object sequences will stop updating
-			// Scratch.When(ButtonClicked("TryAgain"), ReloadCurrentScene());
-			// Scratch.When(ButtonClicked("Quit"), QuitApplication());
+			Scratch.When(ButtonClicked("TryAgain"), Log("clicked TryAgain"), ReloadCurrentScene());
+			Scratch.When(ButtonClicked("Quit"), Log("clicked Quit"), QuitApplication());
 
 			// tick down time, and eventually game over
-			// RepeatForever(Wait(1), DecrementVariable("Time"),
-			// 	If(IsVariableLessOrEqual(timeVariable, 0),
-			// 		ShowMenu(), SetCameraTrackingTarget(null), Wait(0.5), DisableComponent()));
+			RepeatForever(Wait(1), DecrementVariable("Time"),
+				If(IsVariableLessOrEqual(timeVariable, 0),
+					ShowMenu(), SetCameraTrackingTarget(), Wait(0.5), DisableComponent()));
 
 			// Use RepeatForeverPhysics for physics-based movement
 			var enableBrakeLights = Sequence(Enable("BrakeLight1"), Enable("BrakeLight2"));
@@ -85,32 +88,5 @@ namespace ManagedScratchTest10
 			// increment progress every so often
 			RepeatForever(IncrementVariable(progressVar), Wait(15), PlaySound());
 		}
-
-		/*public override void Tick(Single deltaTime)
-		{
-			base.Tick(deltaTime);
-
-			var keyW = new FKey { KeyName = "W" };
-			var keyA = new FKey { KeyName = "A" };
-			var keyS = new FKey { KeyName = "S" };
-			var keyD = new FKey { KeyName = "D" };
-
-			var  inputMove = FVector.Zero;
-			var  inputTurn = FVector.Zero;
-
-			var root = RootComponent as UPrimitiveComponent;
-			var playerController = UGameplayStatics.GetPlayerController(0);
-			if (playerController.IsInputKeyDown(keyW))
-				inputMove += root.ForwardVector;
-			if (playerController.IsInputKeyDown(keyS))
-				 inputMove -= root.ForwardVector;
-			if (playerController.IsInputKeyDown(keyA))
-				inputTurn -= FVector.Up;
-			if (playerController.IsInputKeyDown(keyD))
-				inputTurn += FVector.Up;
-
-			root.AddForce( inputMove * _moveSpeed * 1000000);
-			root.AddTorqueInDegrees( inputTurn * _turnSpeed * 100000000);
-		}*/
 	}
 }
